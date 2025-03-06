@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Математика для детей</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <button id="playButton" class="child-button">Играть</button>
+            <button id="settingsButton" class="child-button">Настройки</button>
+            <button id="rewardsButton" class="child-button">Награды</button>
+            <button id="puzzleButton" class="child-button">Пазл</button>
+        </nav>
+    </header>
+    <main id="gameArea">
+        <div id="questionArea">
+            <p id="question" class="question-font child-friendly"></p>
+            <div id="answers">
+                <button id="answer1" class="answer-button child-friendly"></button>
+                <button id="answer2" class="answer-button child-friendly"></button>
+                <button id="answer3" class="answer-button child-friendly"></button>
+                <button id="answer4" class="answer-button child-friendly"></button>
+            </div>
+            <p id="result"></p>
+            <p id="explanation"></p>
+            <p id="score" class="score-style">Счёт: <span id="currentScore">0</span> из <span id="totalQuestions">0</span></p>
+            <button id="hintButton" class="hint-button">Подсказка</button>
+            <button id="nextQuestionButton" class="next-button" style="display: none;">Следующий вопрос</button>
+        </div>
+
+        <div id="settingsArea" class="settings-container">
+            <h2>Настройки</h2>
+            <label for="difficulty">Уровень сложности:</label>
+            <select id="difficultySelect" class="settings-input">
+                <option value="superEasy">Супер Лёгкий</option>
+                <option value="easy">Легко</option>
+                <option value="medium">Средне</option>
+                <option value="hard">Сложно</option>
+            </select>
+            <button id="saveSettings" class="settings-button">Сохранить</button>
+        </div>
+
+        <div id="rewardsArea" class="rewards-container">
+            <h2>Награды</h2>
+            <p id="dailyTask1">Ежедневное задание 1: Решить 5 задач (<span id="dailyScore1">0</span>/5)</p>
+            <button id="claimReward1" class="claim-rewards-button" style="display: none;">Получить 50 монет</button>
+            <p id="dailyTask2">Ежедневное задание 2: Решить 10 задач на уровне "Сложно" (<span id="dailyScore2">0</span>/10)</p>
+            <button id="claimReward2" class="claim-rewards-button" style="display: none;">Получить 100 монет</button>
+            <p id="achievement1">Достижение: 50 правильных ответов (<span id="achievementScore1">0</span>/50)</p>
+            <button id="claimAchievement1" class="claim-rewards-button" style="display: none;">Получить 200 монет</button>
+            <p id="achievement2">Достижение: Достичь 5 уровня (<span id="levelProgress">1</span>/5)</p>
+            <button id="claimAchievement2" class="claim-rewards-button" style="display: none;">Получить 300 монет</button>
+            <p id="coins" class="coins-style">Монеты: <span id="currentCoins">0</span></p>
+        </div>
+
+        <div id="puzzleArea" class="puzzle-container">
+            <h2>Собери пазл</h2>
+            <p>Каждая часть: 20 монет. Собери 9 частей, чтобы получить 250 монет!</p>
+            <label>Выбери пазл:
+                <select id="puzzleSelect" class="puzzle-input">
+                    <option value="0">Котёнок</option>
+                    <option value="1">Машинка</option>
+                    <option value="2">Цветок</option>
+                </select>
+            </label>
+            <p id="puzzleProgress">Частей собрано: <span id="piecesCollected">0</span>/9</p>
+            <div id="puzzleContainer">
+                <svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <clipPath id="piece1"><rect x="0" y="0" width="100" height="100" /></clipPath>
+                        <clipPath id="piece2"><rect x="100" y="0" width="100" height="100" /></clipPath>
+                        <clipPath id="piece3"><rect x="200" y="0" width="100" height="100" /></clipPath>
+                        <clipPath id="piece4"><rect x="0" y="100" width="100" height="100" /></clipPath>
+                        <clipPath id="piece5"><rect x="100" y="100" width="100" height="100" /></clipPath>
+                        <clipPath id="piece6"><rect x="200" y="100" width="100" height="100" /></clipPath>
+                        <clipPath id="piece7"><rect x="0" y="200" width="100" height="100" /></clipPath>
+                        <clipPath id="piece8"><rect x="100" y="200" width="100" height="100" /></clipPath>
+                        <clipPath id="piece9"><rect x="200" y="200" width="100" height="100" /></clipPath>
+                    </defs>
+                    <image id="puzzlePiece1" width="300" height="300" clip-path="url(#piece1)" style="display: none;" />
+                    <image id="puzzlePiece2" width="300" height="300" clip-path="url(#piece2)" style="display: none;" />
+                    <image id="puzzlePiece3" width="300" height="300" clip-path="url(#piece3)" style="display: none;" />
+                    <image id="puzzlePiece4" width="300" height="300" clip-path="url(#piece4)" style="display: none;" />
+                    <image id="puzzlePiece5" width="300" height="300" clip-path="url(#piece5)" style="display: none;" />
+                    <image id="puzzlePiece6" width="300" height="300" clip-path="url(#piece6)" style="display: none;" />
+                    <image id="puzzlePiece7" width="300" height="300" clip-path="url(#piece7)" style="display: none;" />
+                    <image id="puzzlePiece8" width="300" height="300" clip-path="url(#piece8)" style="display: none;" />
+                    <image id="puzzlePiece9" width="300" height="300" clip-path="url(#piece9)" style="display: none;" />
+                </svg>
+            </div>
+            <button id="buyPieceButton" class="puzzle-button">Купить часть (20 монет)</button>
+            <p id="puzzleMessage"></p>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
