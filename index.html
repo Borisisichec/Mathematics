@@ -2,99 +2,120 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Математика для детей</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <button id="playButton" class="child-button">Играть</button>
-            <button id="settingsButton" class="child-button">Настройки</button>
-            <button id="rewardsButton" class="child-button">Награды</button>
-            <button id="puzzleButton" class="child-button">Пазл</button>
-        </nav>
-    </header>
+    <div id="splashScreen" class="splash-screen">
+        <img src="splash-image.jpg" alt="Splash Screen" class="splash-image">
+    </div>
+    
+    <div id="mainMenu" class="main-menu" style="display: none;">
+        <h1 class="menu-title">Математика для детей</h1>
+        <button id="playButton" class="menu-button"><span>🎲</span> Играть</button>
+        <button id="mosaicButton" class="menu-button"><span>🧩</span> Мозаика</button>
+        <button id="achievementsButton" class="menu-button"><span>🏆</span> Достижения</button>
+        <button id="settingsButton" class="menu-button"><span>⚙️</span> Настройки</button>
+    </div>
+
     <main id="gameArea">
         <div id="questionArea">
-            <p id="question" class="question-font child-friendly"></p>
+            <h2 class="section-title">Вопрос</h2>
+            <p id="question" class="child-friendly large-text"></p>
             <div id="answers">
-                <button id="answer1" class="answer-button child-friendly"></button>
-                <button id="answer2" class="answer-button child-friendly"></button>
-                <button id="answer3" class="answer-button child-friendly"></button>
-                <button id="answer4" class="answer-button child-friendly"></button>
+                <button id="answer1" class="answer-button child-friendly large-text"></button>
+                <button id="answer2" class="answer-button child-friendly large-text"></button>
+                <button id="answer3" class="answer-button child-friendly large-text"></button>
+                <button id="answer4" class="answer-button child-friendly large-text"></button>
             </div>
-            <p id="result"></p>
-            <p id="explanation"></p>
+            <p id="result" class="child-friendly"></p>
+            <p id="explanation" class="child-friendly"></p>
             <p id="score" class="score-style">Счёт: <span id="currentScore">0</span> из <span id="totalQuestions">0</span></p>
+            <p id="coins" class="coins-style">Монеты: <span id="currentCoins">0</span></p>
             <button id="hintButton" class="hint-button">Подсказка</button>
             <button id="nextQuestionButton" class="next-button" style="display: none;">Следующий вопрос</button>
+            <button id="backToMenuFromGame" class="back-button"><span>🏠</span> Назад в меню</button>
         </div>
 
         <div id="settingsArea" class="settings-container">
-            <h2>Настройки</h2>
-            <label for="difficulty">Уровень сложности:</label>
+            <h2 class="section-title">Настройки</h2>
+            <label for="difficulty" class="child-friendly">Уровень сложности:</label>
             <select id="difficultySelect" class="settings-input">
                 <option value="superEasy">Супер Лёгкий</option>
                 <option value="easy">Легко</option>
                 <option value="medium">Средне</option>
                 <option value="hard">Сложно</option>
             </select>
-            <button id="saveSettings" class="settings-button">Сохранить</button>
+            <button id="muteButton" class="settings-button"><span>🔇</span> Отключить звук</button>
+            <button id="resetProgressButton" class="settings-button reset-button"><span>♻️</span> Сбросить прогресс</button>
+            <button id="saveSettings" class="settings-button"><span>💾</span> Сохранить</button>
+            <button id="backToMenuFromSettings" class="back-button"><span>🏠</span> Назад в меню</button>
         </div>
 
-        <div id="rewardsArea" class="rewards-container">
-            <h2>Награды</h2>
-            <p id="dailyTask1">Ежедневное задание 1: Решить 5 задач (<span id="dailyScore1">0</span>/5)</p>
-            <button id="claimReward1" class="claim-rewards-button" style="display: none;">Получить 50 монет</button>
-            <p id="dailyTask2">Ежедневное задание 2: Решить 10 задач на уровне "Сложно" (<span id="dailyScore2">0</span>/10)</p>
-            <button id="claimReward2" class="claim-rewards-button" style="display: none;">Получить 100 монет</button>
-            <p id="achievement1">Достижение: 50 правильных ответов (<span id="achievementScore1">0</span>/50)</p>
-            <button id="claimAchievement1" class="claim-rewards-button" style="display: none;">Получить 200 монет</button>
-            <p id="achievement2">Достижение: Достичь 5 уровня (<span id="levelProgress">1</span>/5)</p>
-            <button id="claimAchievement2" class="claim-rewards-button" style="display: none;">Получить 300 монет</button>
-            <p id="coins" class="coins-style">Монеты: <span id="currentCoins">0</span></p>
-        </div>
-
-        <div id="puzzleArea" class="puzzle-container">
-            <h2>Собери пазл</h2>
-            <p>Каждая часть: 20 монет. Собери 9 частей, чтобы получить 250 монет!</p>
-            <label>Выбери пазл:
-                <select id="puzzleSelect" class="puzzle-input">
-                    <option value="0">Котёнок</option>
-                    <option value="1">Машинка</option>
-                    <option value="2">Цветок</option>
-                </select>
-            </label>
-            <p id="puzzleProgress">Частей собрано: <span id="piecesCollected">0</span>/9</p>
-            <div id="puzzleContainer">
-                <svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <clipPath id="piece1"><rect x="0" y="0" width="100" height="100" /></clipPath>
-                        <clipPath id="piece2"><rect x="100" y="0" width="100" height="100" /></clipPath>
-                        <clipPath id="piece3"><rect x="200" y="0" width="100" height="100" /></clipPath>
-                        <clipPath id="piece4"><rect x="0" y="100" width="100" height="100" /></clipPath>
-                        <clipPath id="piece5"><rect x="100" y="100" width="100" height="100" /></clipPath>
-                        <clipPath id="piece6"><rect x="200" y="100" width="100" height="100" /></clipPath>
-                        <clipPath id="piece7"><rect x="0" y="200" width="100" height="100" /></clipPath>
-                        <clipPath id="piece8"><rect x="100" y="200" width="100" height="100" /></clipPath>
-                        <clipPath id="piece9"><rect x="200" y="200" width="100" height="100" /></clipPath>
-                    </defs>
-                    <image id="puzzlePiece1" width="300" height="300" clip-path="url(#piece1)" style="display: none;" />
-                    <image id="puzzlePiece2" width="300" height="300" clip-path="url(#piece2)" style="display: none;" />
-                    <image id="puzzlePiece3" width="300" height="300" clip-path="url(#piece3)" style="display: none;" />
-                    <image id="puzzlePiece4" width="300" height="300" clip-path="url(#piece4)" style="display: none;" />
-                    <image id="puzzlePiece5" width="300" height="300" clip-path="url(#piece5)" style="display: none;" />
-                    <image id="puzzlePiece6" width="300" height="300" clip-path="url(#piece6)" style="display: none;" />
-                    <image id="puzzlePiece7" width="300" height="300" clip-path="url(#piece7)" style="display: none;" />
-                    <image id="puzzlePiece8" width="300" height="300" clip-path="url(#piece8)" style="display: none;" />
-                    <image id="puzzlePiece9" width="300" height="300" clip-path="url(#piece9)" style="display: none;" />
-                </svg>
+        <div id="mosaicArea">
+            <h2 class="section-title">Мозаика <span id="currentMosaicNumber">1</span>/20</h2>
+            <p id="mosaicCoins" class="coins-style">Монеты: <span id="mosaicCurrentCoins">0</span></p>
+            <div id="mosaicGrid" class="mosaic-grid">
+                <div class="mosaic-piece square-piece" data-index="0"><button class="buy-piece-button" data-cost="100">Купить (100)</button></div>
+                <div class="mosaic-piece square-piece" data-index="1"><button class="buy-piece-button" data-cost="120">Купить (120)</button></div>
+                <div class="mosaic-piece square-piece" data-index="2"><button class="buy-piece-button" data-cost="140">Купить (140)</button></div>
+                <div class="mosaic-piece square-piece" data-index="3"><button class="buy-piece-button" data-cost="160">Купить (160)</button></div>
+                <div class="mosaic-piece square-piece" data-index="4"><button class="buy-piece-button" data-cost="180">Купить (180)</button></div>
+                <div class="mosaic-piece square-piece" data-index="5"><button class="buy-piece-button" data-cost="200">Купить (200)</button></div>
+                <div class="mosaic-piece square-piece" data-index="6"><button class="buy-piece-button" data-cost="220">Купить (220)</button></div>
+                <div class="mosaic-piece square-piece" data-index="7"><button class="buy-piece-button" data-cost="230">Купить (230)</button></div>
+                <div class="mosaic-piece square-piece" data-index="8"><button class="buy-piece-button" data-cost="250">Купить (250)</button></div>
             </div>
-            <button id="buyPieceButton" class="puzzle-button">Купить часть (20 монет)</button>
-            <p id="puzzleMessage"></p>
+            <p id="mosaicMessage" class="child-friendly"></p>
+            <button id="backToMenuFromMosaic" class="back-button"><span>🏠</span> Назад в меню</button>
         </div>
+
+        <div id="achievementsArea">
+            <h2 class="section-title">Достижения</h2>
+            <div id="dailyAchievements">
+                <h3 class="child-friendly">Ежедневные</h3>
+                <div class="achievement" id="streak5">
+                    <p class="child-friendly">5 правильных подряд</p>
+                    <p class="achievement-reward">Награда: 10 монет</p>
+                    <p class="achievement-status">Прогресс: <span id="streak5Progress">0</span>/5</p>
+                </div>
+                <div class="achievement" id="streak10">
+                    <p class="child-friendly">10 правильных подряд</p>
+                    <p class="achievement-reward">Награда: 15 монет</p>
+                    <p class="achievement-status">Прогресс: <span id="streak10Progress">0</span>/10</p>
+                </div>
+                <div class="achievement" id="quickLearner">
+                    <p class="child-friendly">3 правильных с первой попытки</p>
+                    <p class="achievement-reward">Награда: 5 монет</p>
+                    <p class="achievement-status">Прогресс: <span id="quickLearnerProgress">0</span>/3</p>
+                </div>
+                <div class="achievement" id="coinMaster">
+                    <p class="child-friendly">Заработать 50 монет за день</p>
+                    <p class="achievement-reward">Награда: 10 монет</p>
+                    <p class="achievement-status">Прогресс: <span id="coinMasterProgress">0</span>/50</p>
+                </div>
+                <div class="achievement" id="hintMaster">
+                    <p class="child-friendly">Использовать подсказку 5 раз</p>
+                    <p class="achievement-reward">Награда: 15 монет</p>
+                    <p class="achievement-status">Прогресс: <span id="hintMasterProgress">0</span>/5</p>
+                </div>
+            </div>
+            <div id="loginStreak">
+                <h3 class="child-friendly">Ежедневный вход</h3>
+                <p class="child-friendly">Заходи каждый день!</p>
+                <p class="achievement-reward">Награда: 5 монет в день, 50 за 7 дней</p>
+                <p class="achievement-status">Дней подряд: <span id="loginStreakProgress">0</span>/7</p>
+            </div>
+            <button id="backToMenuFromAchievements" class="back-button"><span>🏠</span> Назад в меню</button>
+        </div>
+
+        <audio id="correctSound" src="correct.mp3"></audio>
+        <audio id="incorrectSound" src="incorrect.mp3"></audio>
     </main>
     <script src="script.js"></script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91da3e0a7fb444d1',t:'MTc0MTUxOTg0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91da83b11ecf53a9',t:'MTc0MTUyMjcwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
-</html>
+</html> 
