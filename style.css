@@ -2,182 +2,410 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
     transition: all 0.3s ease;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-}
-
-header {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    animation: header-glow 5s infinite;
-}
-
-@keyframes header-glow {
-    0%, 100% { box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); }
-    50% { box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); }
-}
-
-nav button {
-    margin: 5px;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-nav button:hover {
-    background-color: #0056b3;
-}
-
-main {
-    padding: 20px;
-    min-height: 80vh;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-#questionArea, #settingsArea, #rewardsArea, #puzzleArea {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    width: 100%;
-    display: none;
-}
-
-#questionArea.active, #settingsArea.active, #rewardsArea.active, #puzzleArea.active {
-    display: block;
-    animation: page-appear 0.5s;
-}
-
-@keyframes page-appear {
-    0% { opacity: 0; transform: scale(0.8); }
-    100% { opacity: 1; transform: scale(1); }
-}
-
-.child-friendly {
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    font-size: clamp(18px, 5vw, 24px);
-    font-weight: bold;
+    background: linear-gradient(135deg, #d4a5ff, #a5d6ff);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    overflow-x: hidden;
     color: #333;
 }
 
-#question {
-    font-weight: bold;
-    margin-bottom: 20px;
-    animation: question-glow 2s infinite;
-}
-
-@keyframes question-glow {
-    0%, 100% { text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); }
-    50% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
-}
-
-#answers {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-.answer-button {
-    width: 45%;
-    height: 60px;
-    margin: 10px;
-    background-color: #a8d8ea;
-    border: 2px solid #7189bf;
-    color: #36454f;
-    font-size: clamp(16px, 4vw, 24px);
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-}
-
-.answer-button:hover { background-color: #bfe2ff; transform: scale(1.05); }
-.answer-button:active { transform: scale(0.95); }
-
-#result { font-size: clamp(18px, 5vw, 24px); margin-bottom: 20px; animation: result-glow 1s; }
-@keyframes result-glow { 0% { opacity: 0; } 100% { opacity: 1; } }
-
-#explanation { font-size: clamp(14px, 4vw, 18px); color: blue; margin-bottom: 20px; }
-
-.score-style, .coins-style {
-    font-size: clamp(16px, 4vw, 20px);
-    font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-.score-style { color: #ff8c00; }
-.coins-style { color: #daa520; }
-
-#hintButton, #nextQuestionButton, .settings-button, .claim-rewards-button, .puzzle-button {
+/* Заставка */
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 40px;
-    font-size: clamp(14px, 4vw, 18px);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-#hintButton, #nextQuestionButton {
-    background-color: #007bff;
-    color: white;
-}
-
-#hintButton:hover, #nextQuestionButton:hover {
-    background-color: #0056b3;
-}
-
-.settings-container, .rewards-container, .puzzle-container {
+    height: 100%;
+    background: #fff;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: #f9f9f9;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 1;
 }
 
-.settings-input, .puzzle-input {
-    margin-bottom: 10px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.splash-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.splash-screen.fade-out {
+    animation: fadeOut 1s ease forwards;
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; display: none; }
+}
+
+/* Главное меню */
+.main-menu {
+    background: #fff;
+    border-radius: 20px;
+    padding: 35px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 15px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.menu-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 28px;
+    color: #6b48ff;
+    margin-bottom: 20px;
+}
+
+.menu-button {
+    background: linear-gradient(45deg, #c7aaff, #b3d4ff);
+    color: #333;
+    padding: 15px;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px auto;
     width: 100%;
     max-width: 300px;
 }
 
-.settings-button, .claim-rewards-button, .puzzle-button {
-    background-color: #5cb85c;
-    color: white;
+.menu-button span {
+    margin-right: 8px;
 }
 
-.settings-button:hover, .claim-rewards-button:hover, .puzzle-button:hover {
-    background-color: #4cae4c;
+.menu-button:hover {
+    background: linear-gradient(45deg, #b88fff, #99c6ff);
+    transform: scale(1.05);
 }
 
-#puzzleContainer {
-    margin: 20px 0;
+.menu-button:active {
+    transform: scale(0.95);
+}
+
+main {
+    padding: 15px;
+    width: 100%;
+    max-width: 400px;
+    min-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#questionArea, #settingsArea, #mosaicArea, #achievementsArea {
+    background: #fff;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    display: none;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+#questionArea.active, #settingsArea.active, #mosaicArea.active, #achievementsArea.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.section-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 24px;
+    color: #6b48ff;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.child-friendly {
+    font-family: 'Baloo 2', cursive;
+    font-size: 18px;
+    color: #555;
+}
+
+.large-text {
+    font-size: 28px;
+}
+
+#question {
+    margin-bottom: 15px;
     text-align: center;
 }
 
-#puzzleMessage {
-    font-size: clamp(14px, 4vw, 18px);
+#answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.answer-button {
+    background: linear-gradient(45deg, #c7aaff, #b3d4ff);
+    color: #333;
+    padding: 15px;
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.answer-button:hover {
+    background: linear-gradient(45deg, #b88fff, #99c6ff);
+    transform: scale(1.05);
+}
+
+.answer-button:active {
+    transform: scale(0.95);
+}
+
+#result { font-size: 20px; text-align: center; margin: 10px 0; }
+#explanation { font-size: 16px; color: #777; text-align: center; margin-bottom: 10px; }
+
+.score-style, .coins-style {
+    font-size: 18px;
+    color: #ffcc00;
+    margin: 10px 0;
+    text-align: center;
+}
+
+#hintButton, #nextQuestionButton {
+    background: linear-gradient(45deg, #c7aaff, #b3d4ff);
+    color: #333;
+    padding: 10px;
+    border-radius: 15px;
+    font-size: 16px;
+    border: none;
+    width: 100%;
+    margin-top: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+#hintButton:hover, #nextQuestionButton:hover {
+    background: linear-gradient(45deg, #b88fff, #99c6ff);
+}
+
+#hintButton:active, #nextQuestionButton:active {
+    transform: scale(0.95);
+}
+
+.settings-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.settings-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    margin-bottom: 15px;
+    background: #f9f9f9;
+}
+
+.settings-button {
+    background: linear-gradient(45deg, #c7aaff, #b3d4ff);
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 15px;
+    font-size: 16px;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-button span {
+    margin-right: 8px;
+}
+
+.settings-button:hover {
+    background: linear-gradient(45deg, #b88fff, #99c6ff);
+}
+
+.reset-button {
+    background: linear-gradient(45deg, #ff9999, #ffcccc);
+}
+
+.reset-button:hover {
+    background: linear-gradient(45deg, #ff6666, #ff9999);
+}
+
+#mosaicArea {
+    text-align: center;
+    flex-grow: 1;
+}
+
+.mos_h2 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 24px;
+    color: #6b48ff;
+    margin-bottom: 10px;
+}
+
+.mosaic-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    width: 100%;
+    max-width: 300px;
+    margin: 15px auto;
+    padding: 0;
+    border-radius: 10px;
+    background: #f9f9f9;
+}
+
+.mosaic-piece {
+    background: linear-gradient(45deg, #c7aaff, #b3d4ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.square-piece {
+    width: 100px;
+    height: 100px;
+    border-radius: 0;
+}
+
+.mosaic-piece.unlocked {
+    background-size: 300px 300px;
+}
+
+.buy-piece-button {
+    background: linear-gradient(45deg, #c7aaff, #b3d4ff);
+    color: #333;
+    padding: 8px 12px;
+    border-radius: 15px;
+    border: none;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.buy-piece-button:hover {
+    background: linear-gradient(45deg, #b88fff, #99c6ff);
+}
+
+#mosaicMessage {
+    font-size: 16px;
     margin-top: 10px;
 }
 
-.completed { color: green; }
-.not-completed { color: gray; }
-
-@media (max-width: 400px) {
-    main { padding: 10px; }
-    .answer-button { width: 100%; }
-    #puzzleContainer svg { width: 100%; height: auto; }
+#achievementsArea {
+    text-align: center;
+    flex-grow: 1;
 }
+
+#dailyAchievements {
+    margin-top: 15px;
+}
+
+.achievement {
+    background: linear-gradient(45deg, #c7aaff, #b3d4ff);
+    border-radius: 15px;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.achievement.completed {
+    background: linear-gradient(45deg, #ffd700, #ffff99);
+}
+
+.achievement-reward {
+    font-size: 16px;
+    color: #ffcc00;
+}
+
+.achievement-status {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Кнопка "Назад в меню" */
+.back-button {
+    background: linear-gradient(45deg, #ff9999, #ffcccc);
+    color: #333;
+    padding: 10px;
+    border-radius: 15px;
+    font-size: 16px;
+    border: none;
+    width: 100%;
+    max-width: 200px;
+    margin: 15px auto 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-button span {
+    margin-right: 8px;
+}
+
+.back-button:hover {
+    background: linear-gradient(45deg, #ff6666, #ff9999);
+    transform: scale(1.05);
+}
+
+.back-button:active {
+    transform: scale(0.95);
+}
+
+/* Адаптация по высоте */
+@media (max-height: 600px) {
+    .main-menu { padding: 15px; margin: 10px; }
+    .menu-title { font-size: 24px; margin-bottom: 15px; }
+    .menu-button { padding: 12px; font-size: 16px; margin: 8px auto; }
+    main { padding: 10px; min-height: calc(100vh - 48px); }
+    #questionArea, #settingsArea, #mosaicArea, #achievementsArea { padding: 10px; }
+    .section-title { font-size: 20px; }
+    #question { font-size: 24px; margin-bottom: 10px; }
+    .answer-button { padding: 10px; font-size: 22px; }
+    #result { font-size: 16px; }
+    #explanation { font-size: 14px; }
+    .score-style, .coins-style { font-size: 16px; }
+    #hintButton, #nextQuestionButton { padding: 8px; font-size: 14px; }
+    .settings-container h2 { font-size: 20px; }
+    .settings-input { padding: 8px; font-size: 14px; }
+    .settings-button { padding: 8px 16px; font-size: 14px; }
+    .mos_h2 { font-size: 20px; }
+    .mosaic-grid { max-width: 240px; }
+    .square-piece { width: 80px; height: 80px; }
+    .buy-piece-button { padding: 6px 10px; font-size: 12px; }
+    #mosaicMessage { font-size: 14px; }
+    .back-button { padding: 8px; font-size: 14px; margin-top: 10px; }
+}
+
